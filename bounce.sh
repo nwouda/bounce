@@ -68,4 +68,3 @@ lines=$(($lines-1))
 cols=$(tput cols)
 sleep 0.02
 done
-sleep 5
