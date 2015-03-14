@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 tput clear; 
 lines=$(tput lines) 
 lines=$(($lines-1))
