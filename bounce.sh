@@ -48,8 +48,6 @@ while :; do
       color=$((RANDOM%$colorcount+1))
     fi
   fi
-  lines=$(tput lines) 
-  lines=$(($lines-1))
-  cols=$(tput cols)
-  cols=$(($cols-4))
+  lines=$(($(tput lines)-1))
+  cols=$(($(tput cols)-4))
 done
