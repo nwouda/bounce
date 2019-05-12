@@ -1,27 +1,24 @@
 #!/usr/bin/env bash
 tput clear; 
-lines=$(tput lines) 
-lines=$(($lines-1))
-cols=$(tput cols)
-x=0
-y=0
-cursorz="😄 😃 😀 😊 😉 😍 😘 😚 😗 😙 😜 😝 😛 😳 😁 😔 😌 😒 😞 😣 😢 😂 😭 😪 😥 😰 😅 😓 😩 😫 😨 😱 😠 😡 😤 😖 😆 😋 😷 😎 😴 😵 😲 😟 😦 😧 😈 👿 😮 😬 😐 😕 😯 😶 😇 😏 😑 👲 👳 👮 👷 💂 👶 👦 👧 👨 👩 👴 👵 👱 👼 👸"
-cursors=($cursorz)
-num_cursors=${#cursors[*]}
-cursor=${cursors[$((RANDOM%num_cursors))]}
+lines=$(($(tput lines)-1))
+cols=$(($(tput cols)-4))
+x=$((RANDOM%$cols))
+y=$((RANDOM%$lines))
+colorcount=$(($(tput colors)-1))
+color=$((RANDOM%$colorcount))
 xmode="inc"
 ymode="inc"
 while :; do
   tput cup $y $x
-  printf $cursor
+  tput setaf $color
+  printf ████
   if [ $xmode == "inc" ]; then
     if [ $x -lt $cols ]; then
       x=$(($x+1))
     else
       xmode="dec"
       x=$(($x-1))
-      cursor=${cursors[$((RANDOM%num_cursors))]}
-      printf 
+      color=$((RANDOM%$colorcount))
     fi
   elif [ $xmode == "dec" ]; then
     if [ $x -gt 0 ]; then
@@ -29,8 +26,7 @@ while :; do
     else
       xmode="inc"
       x=$(($x+1))
-      cursor=${cursors[$((RANDOM%num_cursors))]}
-      printf 
+      color=$((RANDOM%$colorcount))
     fi
   fi
 
@@ -40,8 +36,7 @@ while :; do
     else
       ymode="dec"
       y=$(($y-1))
-      cursor=${cursors[$((RANDOM%num_cursors))]}
-      printf 
+      color=$((RANDOM%$colorcount))
     fi
   elif [ $ymode == "dec" ]; then
     if [ $y -gt 0 ]; then
@@ -49,12 +44,12 @@ while :; do
     else
       ymode="inc"
       y=$(($y+1))
-      cursor=${cursors[$((RANDOM%num_cursors))]}
-      printf 
+      x=$(($x+RANDOM%2))
+      color=$((RANDOM%$colorcount+1))
     fi
   fi
   lines=$(tput lines) 
   lines=$(($lines-1))
   cols=$(tput cols)
-  sleep 0.02
+  cols=$(($cols-4))
 done
